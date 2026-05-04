@@ -28,6 +28,9 @@ public class LandingPage extends AbstractComponents {
     @FindBy(css = "#EnterInvoice")
     WebElement invoiceNumField;
 
+    @FindBy(css = "#basketNavLink")
+    WebElement basket;
+
     public LandingPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
@@ -49,6 +52,11 @@ public class LandingPage extends AbstractComponents {
     public void clickSignInCTA() {
         click(loginBtn);
     }
+
+    public void clickOnBasket() {
+        click(basket);
+    }
+
 
     public void findInvoice(String invoiceNumber) {
         type(invoiceNumField, invoiceNumber);

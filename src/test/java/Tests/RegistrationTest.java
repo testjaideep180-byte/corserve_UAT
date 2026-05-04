@@ -5,6 +5,7 @@ import Pages.RegistrationPage;
 import TestComponents.BaseTest;
 import Utils.TestDataUtil;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -62,4 +63,6 @@ public class RegistrationTest extends BaseTest {
         RegistrationPage page = new RegistrationPage(driver);
         Assert.assertEquals(page.signUpBtnFunctionality(), "Register | Corserv");
     }
+
+
 }

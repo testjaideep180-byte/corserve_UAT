@@ -38,6 +38,10 @@ public class AbstractComponents {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView({block: 'center'});", FindBy);
     }
+    public void scrollToLocator(By locator) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView({block: 'center'});", locator);
+    }
 
     public void click(WebElement element) {
         waitForElementToVisible(element).click();
