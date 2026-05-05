@@ -42,7 +42,7 @@ public class BaseTest {
 
     public HashMap<String, String> getNextUnusedData() throws IOException {
 
-        String path = System.getProperty("user.dir") + "//src//test//java//data//PurchaseOrder.json";
+        String path = System.getProperty("user.dir") + "//src//test//java//Data//CustomerData.json";
 
         String jsonContent = FileUtils.readFileToString(new File(path), StandardCharsets.UTF_8);
 

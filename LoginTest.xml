@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Login Suite">
+
+    <test name="Invoice Tests">
+        <classes>
+            <class name="Tests.InvoiceTest">
+                <methods>
+                    <include name="verifyInvoiceSearchFunctionality"/>
+                    <include name="verifyInvoicePaymentFunctionality"/>
+                    <include name="verifyInvoiceCardPaymentFunctionality"/>
+                    <include name="verifyCartClearFunctionality"/>
+                    <include name="verifyInvoiceCardCartFunctionality"/>
+                    <include name="verifyViewInvoiceDetailsFunctionality"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="Login Tests">
+        <classes>
+            <class name="Tests.LoginTest">
+                <methods>
+                    <include name="verifyLoginFunctionality"/>
+                    <include name="verifyLoginWithInvalidCredentialsFunctionality"/>
+                    <include name="verifyLoginWithoutCredentials"/>
+                    <include name="verifyLoginWithInvalidCustomerIDFormat"/>
+                    <include name="verifyRedirectionToInvoiceList"/>
+                    <include name="verifyFindInvoice"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="Registration Tests">
+        <classes>
+            <class name="Tests.RegistrationTest">
+                <methods>
+                    <include name="registrationSuccess"/>
+                    <include name="registrationFailure"/>
+                    <include name="emptyFormSubmission"/>
+                    <include name="verifySigUpBtnFunctionality"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+</suite>

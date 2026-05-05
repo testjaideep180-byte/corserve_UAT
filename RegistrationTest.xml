@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Registration Suite">
+
+<test name="Registration Tests">
+    <classes>
+        <class name="Tests.RegistrationTest">
+            <methods>
+                <include name="registrationSuccess"/>
+                <include name="registrationFailure"/>
+                <include name="emptyFormSubmission"/>
+                <include name="verifySigUpBtnFunctionality"/>
+            </methods>
+        </class>
+    </classes>
+</test>
+
+</suite>

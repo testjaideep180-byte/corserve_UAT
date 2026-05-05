@@ -5,7 +5,6 @@ import Pages.RegistrationPage;
 import TestComponents.BaseTest;
 import Utils.TestDataUtil;
 import org.testng.Assert;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -55,7 +54,7 @@ public class RegistrationTest extends BaseTest {
     public void emptyFormSubmission(){
         RegistrationPage page = new RegistrationPage(driver);
         page.submitEmptyForm();
-        Assert.assertEquals(page.errorMessageCount(),4);
+        Assert.assertEquals(page.errorMessageCount(),7);
     }
 
     @Test
