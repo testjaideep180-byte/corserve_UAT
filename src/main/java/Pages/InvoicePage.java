@@ -4,21 +4,11 @@ import AbstractComponents.AbstractComponents;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class InvoicePage extends AbstractComponents {
     WebDriver driver;
 
-    @FindBy(css=".pay-now-btn")
-    List<WebElement> payNow;
-
-    @FindBy(css=".add-basket-btn")
-    List<WebElement> addToCart;
-
-    @FindBy(css=".fa-eye")
-    List<WebElement> viewInvoice;
 
     @FindBy(xpath = "//label[contains(text(),'Invoice Number')]/following-sibling::div")
     WebElement invoiceNum;
@@ -26,107 +16,164 @@ public class InvoicePage extends AbstractComponents {
     @FindBy(xpath = "//label[contains(text(),'Payment Status')]/following-sibling::div")
     WebElement paymentStatus;
 
-    @FindBy(css=".text-center")
+    @FindBy(css = ".text-center")
     WebElement pay;
 
-    @FindBy(xpath="(//div[@class='row mx-0 invoice-list-row'])[1]")
+    @FindBy(xpath = "(//div[@class='row mx-0 invoice-list-row'])[1]")
     WebElement invoiceCard;
 
-    @FindBy(css="#orderRef")
+    @FindBy(css = ".invoice-list-row")
+    List<WebElement> invoiceCardsList;
+
+
+    @FindBy(css = "#orderRef")
     WebElement reference;
 
-    @FindBy(css="#orderAmount")
+    @FindBy(css = "#orderAmount")
     WebElement amount;
 
-    @FindBy(css=".add-basket-btn")
-    List<WebElement> addToBasketBtn;
+    @FindBy(css = "#basketBarTotal")
+    WebElement cartBarTotalAmount;
 
-    @FindBy(css="#clearBasketBtn")
-    WebElement clearBasket;
+    @FindBy(css = "#basketBarCount")
+    WebElement cartBarInvoiceCount;
 
-    By invoiceNumber = By.xpath("//label[contains(text(),'Invoice Number')]/following-sibling::div");
+    @FindBy(css = ".btn-sm")
+    WebElement checkoutButton;
+
+
+    By invoiceNumber = By.xpath(".//div[contains(text(),'CINV')]");
     By dueAmount = By.xpath("//label[contains(text(),'Due Amount')]/following-sibling::div");
     By payNowBtn = By.cssSelector(".pay-now-btn");
+    By addToBasketBtn = By.cssSelector(".add-basket-btn");
+    By viewInvoice = By.cssSelector(".fa-eye");
 
-        public InvoicePage(WebDriver driver){
+    public InvoicePage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         PageFactory.initElements(driver, this);
 
     }
 
-        public void searchInvoice(String invoiceNumber, String customerID, String password ) {
-            LoginPage loginPage = new LoginPage(driver);
-            loginPage.login(customerID, password);
-            LandingPage landingPage = new LandingPage(driver);
-            landingPage.findInvoice(invoiceNumber);
+    public void searchInvoice(String invoiceNumber, String customerID, String password) {
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login(customerID, password);
+        LandingPage landingPage = new LandingPage(driver);
+        landingPage.findInvoice(invoiceNumber);
 
-        }
-        public String getInvoiceID(){
+    }
+
+    public String getInvoiceID() {
         waitForElementToVisible(invoiceNum);
         return invoiceNum.getText();
     }
 
-        public String getInvoiceStatus(){
+    public String getInvoiceStatus() {
         waitForElementToVisible(paymentStatus);
         return paymentStatus.getText();
     }
 
-        public void clickOnPayButton(){
-            scrollToElement(pay);
-            waitForElementToBeClickable(pay);
-            click(pay);
+    public void clickOnPayButton() {
+        scrollToElement(pay);
+        waitForElementToBeClickable(pay);
+        click(pay);
+
+    }
+
+    public void invoiceCardDetails(String customerID, String password) {
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login(customerID, password);
+        LandingPage landingPage = new LandingPage(driver);
+        landingPage.clickPayInvoiceCTA();
+    }
+
+    public String getInvoiceNumber() {
+        return invoiceCard.findElement(invoiceNumber).getText();
+    }
+
+    public String getDueAmount() {
+        scrollToElement(invoiceCard.findElement(dueAmount));
+        return invoiceCard.findElement(dueAmount).getText();
+    }
+
+    public void clickPayNowBtn() {
+        invoiceCard.findElement(payNowBtn).click();
+    }
+
+    public String getReference() {
+        return reference.getText();
+    }
+
+    public String getAmount() {
+        return amount.getText();
+    }
 
 
+    public void clickOnAddToBasketButton() throws InterruptedException {
+        scrollToElement(invoiceCard);
+        Thread.sleep(2000);
+        waitForElementToVisible(invoiceCard);
+        int count = Math.min(driver.findElements(addToBasketBtn).size(), 3);
+        for (int i = 0; i < count; i++) {
+            List<WebElement> elements = driver.findElements(addToBasketBtn);
+            WebElement element = elements.get(i); // always first available
+            waitForElementToBeClickable(element);
+            element.click();
+        }
+    }
+
+    public double getDueAmountsOfCartAddedInvoices() {
+        List<WebElement> elements = driver.findElements(dueAmount);
+
+        int count = Math.min(elements.size(), 3);
+        double sum = 0;
+
+        for (int i = 0; i < count; i++) {
+            sum += Double.parseDouble(elements.get(i).getText().replaceAll("£", ""));
         }
 
-        public void invoiceCardDetails(String customerID, String password ){
-            LoginPage loginPage = new LoginPage(driver);
-            loginPage.login(customerID, password);
-            LandingPage landingPage = new LandingPage(driver);
-            landingPage.clickPayInvoiceCTA();
+        return sum;
+    }
+
+    public double getTotalDueAmountsOfCartAddedInvoices() {
+        return Double.parseDouble(cartBarTotalAmount.getText().replaceAll("£", ""));
+    }
 
 
-        }
+    public String getTotalInvoiceCount() {
+        return cartBarInvoiceCount.getText();
+    }
 
-        public String getInvoiceNumber(){
-            return invoiceCard.findElement(invoiceNumber).getText();
-        }
-        public String getDueAmount()
-        {
-            scrollToElement(invoiceCard.findElement(dueAmount));
-            return invoiceCard.findElement(dueAmount).getText();
-        }
-        public void clickPayNowBtn(){
-            invoiceCard.findElement(payNowBtn).click();
-        }
-        public String getReference(){
-            return reference.getText();
-        }
-        public String getAmount(){
-            return amount.getText();
-        }
+    public void clickCheckoutButton() {
+        click(checkoutButton);
 
-        public void goToBasket(){
-            LandingPage landingPage = new LandingPage(driver);
-            landingPage.clickOnBasket();
-            scrollToElement(clearBasket);
-            click(clearBasket);
-            Alert alert = driver.switchTo().alert();
-            alert.accept();
+    }
 
-            driver.navigate().back();
-        }
+    public List<WebElement> getAllInvoicesList() {
+        return invoiceCardsList;
+    }
 
-        public void clickOnAddToBasketButton(){
-            scrollToElement(invoiceCard.findElement(dueAmount));
 
-            for(int i = 1;i<=3;i++){
-                addToBasketBtn.get(i).click();
 
+    public WebElement getInvoiceByNumber(String invoiceNum) {
+
+        for (WebElement card : getAllInvoicesList()) {
+            ((JavascriptExecutor) driver)
+                    .executeScript("arguments[0].scrollIntoView({block: 'center'});", card);
+                     String text = card.findElement(invoiceNumber).getText().trim();
+            if (text.equals(invoiceNum)) {
+                return card; // return the matched invoice card
             }
         }
 
+        throw new RuntimeException("Invoice not found: " + invoiceNum);
+    }
+
+     public void clickOnViewInvoiceDetails(String invoiceNum){
+         WebElement prod = getInvoiceByNumber(invoiceNum); // Find the target product
+         prod.findElement(viewInvoice).click();
+     }
+
+    }
 
 
-}

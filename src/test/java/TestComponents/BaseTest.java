@@ -13,7 +13,6 @@ import org.testng.annotations.BeforeMethod;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +37,6 @@ public class BaseTest {
             options.addArguments("--incognito");
             driver  = new ChromeDriver(options);
             driver.manage().window().maximize();   // Maximize browser window
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
             return driver;
     }
 
@@ -82,9 +80,9 @@ public class BaseTest {
         landingPage.goTo();
         return landingPage;
     }
-//    @AfterMethod
-//    public void closeApplication(){
-//        driver.close();
-//    }
+    @AfterMethod
+    public void closeApplication(){
+        driver.close();
+    }
 
 }
