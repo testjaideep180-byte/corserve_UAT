@@ -14,7 +14,7 @@ import Models.User;
 
 
 public class RegistrationPage extends AbstractComponents {
-    WebDriver driver;
+
 
     @FindBy (id = "FirstName")
     WebElement firstName;
@@ -41,7 +41,6 @@ public class RegistrationPage extends AbstractComponents {
 
     public RegistrationPage(WebDriver driver){
         super(driver);
-        this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 

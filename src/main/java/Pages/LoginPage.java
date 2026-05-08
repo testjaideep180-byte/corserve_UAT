@@ -8,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class LoginPage extends AbstractComponents {
-    WebDriver driver;
+
 
     @FindBy(id="CustomerId")
     WebElement customerIDField;
@@ -31,7 +31,6 @@ public class LoginPage extends AbstractComponents {
 
     public LoginPage(WebDriver driver){
         super(driver);
-        this.driver = driver;
         PageFactory.initElements(driver, this);
     }
     public void login(String customerID, String password) {

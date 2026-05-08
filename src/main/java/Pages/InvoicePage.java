@@ -7,7 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.List;
 
 public class InvoicePage extends AbstractComponents {
-    WebDriver driver;
+
 
 
     @FindBy(xpath = "//label[contains(text(),'Invoice Number')]/following-sibling::div")
@@ -25,7 +25,6 @@ public class InvoicePage extends AbstractComponents {
     @FindBy(css = ".invoice-list-row")
     List<WebElement> invoiceCardsList;
 
-
     @FindBy(css = "#orderRef")
     WebElement reference;
 
@@ -41,6 +40,8 @@ public class InvoicePage extends AbstractComponents {
     @FindBy(css = ".btn-sm")
     WebElement checkoutButton;
 
+    @FindBy(css = ".inner-banner-cont")
+    WebElement invoiceBanner;
 
     By invoiceNumber = By.xpath(".//div[contains(text(),'CINV')]");
     By dueAmount = By.xpath("//label[contains(text(),'Due Amount')]/following-sibling::div");
@@ -48,9 +49,8 @@ public class InvoicePage extends AbstractComponents {
     By addToBasketBtn = By.cssSelector(".add-basket-btn");
     By viewInvoice = By.cssSelector(".fa-eye");
 
-    public InvoicePage(WebDriver driver) {
+        public InvoicePage(WebDriver driver) {
         super(driver);
-        this.driver = driver;
         PageFactory.initElements(driver, this);
 
     }
@@ -75,7 +75,6 @@ public class InvoicePage extends AbstractComponents {
 
     public void clickOnPayButton() {
         scrollToElement(pay);
-        waitForElementToBeClickable(pay);
         click(pay);
 
     }
@@ -93,7 +92,8 @@ public class InvoicePage extends AbstractComponents {
 
     public String getDueAmount() {
         scrollToElement(invoiceCard.findElement(dueAmount));
-        return invoiceCard.findElement(dueAmount).getText();
+        return invoiceCard.findElement(dueAmount).getText().replaceAll("£","");
+
     }
 
     public void clickPayNowBtn() {
@@ -105,7 +105,7 @@ public class InvoicePage extends AbstractComponents {
     }
 
     public String getAmount() {
-        return amount.getText();
+        return amount.getText().replaceAll("£", "");
     }
 
 
@@ -117,22 +117,12 @@ public class InvoicePage extends AbstractComponents {
         for (int i = 0; i < count; i++) {
             List<WebElement> elements = driver.findElements(addToBasketBtn);
             WebElement element = elements.get(i); // always first available
-            waitForElementToBeClickable(element);
             element.click();
         }
     }
 
     public double getDueAmountsOfCartAddedInvoices() {
-        List<WebElement> elements = driver.findElements(dueAmount);
-
-        int count = Math.min(elements.size(), 3);
-        double sum = 0;
-
-        for (int i = 0; i < count; i++) {
-            sum += Double.parseDouble(elements.get(i).getText().replaceAll("£", ""));
-        }
-
-        return sum;
+        return addAmounts(dueAmount,3);
     }
 
     public double getTotalDueAmountsOfCartAddedInvoices() {
@@ -155,7 +145,7 @@ public class InvoicePage extends AbstractComponents {
 
 
 
-    public WebElement getInvoiceByNumber(String invoiceNum) {
+    private WebElement getInvoiceByNumber(String invoiceNum) {
 
         for (WebElement card : getAllInvoicesList()) {
             ((JavascriptExecutor) driver)
@@ -174,6 +164,9 @@ public class InvoicePage extends AbstractComponents {
          prod.findElement(viewInvoice).click();
      }
 
+     public boolean isBannerDisplayed(){
+        return invoiceBanner.isDisplayed();
+     }
     }
 
 

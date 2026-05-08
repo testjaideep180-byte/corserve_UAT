@@ -8,7 +8,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class LandingPage extends AbstractComponents {
-    WebDriver driver;
 
     @FindBy(xpath = "//div[@class='banner-btn']/a[2]")
     WebElement createAccountCTA;
@@ -33,7 +32,6 @@ public class LandingPage extends AbstractComponents {
 
     public LandingPage(WebDriver driver) {
         super(driver);
-        this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 

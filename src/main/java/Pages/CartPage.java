@@ -2,6 +2,7 @@ package Pages;
 
 import AbstractComponents.AbstractComponents;
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,7 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.List;
 
 public class CartPage extends AbstractComponents {
-    WebDriver driver;
+
 
     @FindBy(css = ".basket-item-row")
     List<WebElement> cartItems;
@@ -27,21 +28,16 @@ public class CartPage extends AbstractComponents {
     @FindBy(css = ".btn-blue")
     WebElement addMoreInvoiceButton;
 
-    @FindBy(xpath = "//div[@class='basket-item-row']/div[2]/button")
+    @FindBy(xpath = "(//button[@class='basket-remove-btn'])[1]")
     WebElement removeButton;
-
-    @FindBy(css = ".basket-item-row")
-    WebElement invoiceRecords;
-
-    @FindBy(css = ".basket-item-amount")
-    WebElement invoiceAmount;
 
     @FindBy(css = "#basketTotal")
     WebElement invoiceTotalAmount;
 
+    By  invoiceAmount = By.cssSelector(".basket-item-amount");
+
     public CartPage(WebDriver driver){
         super(driver);
-        this.driver =driver;
         PageFactory.initElements(driver, this);
 
     }
@@ -49,12 +45,17 @@ public class CartPage extends AbstractComponents {
     public void goToBasket() {
         LandingPage landingPage = new LandingPage(driver);
         landingPage.clickOnBasket();
-        if(!cartItems.isEmpty()){
-            scrollToElement(clearBasket);
-        }
-        System.out.println("Basket is empty");
-
     }
+
+
+    public void scrollToClearBasket() {
+        if (!cartItems.isEmpty()) {
+                scrollToElement(clearBasket);
+            }
+        else {
+                System.out.println("Basket is empty");
+            }
+        }
 
     public void clearCartBasket() {
 
@@ -64,7 +65,57 @@ public class CartPage extends AbstractComponents {
             Alert alert = driver.switchTo().alert();
             alert.accept();
         }
-        System.out.println("Basket is empty");
+        else{
+            System.out.println("Basket is empty");
+        }
     }
+
+
+    public void addInvoiceToCart() throws InterruptedException {
+
+        if(cartItems.isEmpty()) {
+            click(viewInvoiceCTA);
+            InvoicePage invoicePage = new InvoicePage(driver);
+            invoicePage.clickOnAddToBasketButton();
+            driver.navigate().back();
+            driver.navigate().refresh();
+        }
+        else{
+            System.out.println("Invoices are present in Cart");
+        }
+    }
+
+
+    public void goToCheckout(){
+        scrollToElement(proceedToCheckout);
+        waitForElementToVisible(proceedToCheckout);
+        click(proceedToCheckout);
+    }
+
+    public String getTotalAmount(){
+        scrollToElement(invoiceTotalAmount);
+        waitForElementToVisible(invoiceTotalAmount);
+        return invoiceTotalAmount.getText().replaceAll("[^0-9.]", "");
+    }
+
+    public void removeInvoice(){
+        waitForElementToVisible(removeButton);
+        click(removeButton);
+    }
+
+    public int invoiceCount(){
+        return cartItems.size();
+    }
+
+    public double invoiceTotalAmount(){
+        return addAmounts(invoiceAmount,driver.findElements(invoiceAmount).size());
+
+    }
+
+    public void clickAddMoreInvoicesCTA(){
+        waitForElementToVisible(addMoreInvoiceButton);
+        click(addMoreInvoiceButton);
+    }
+
 
 }

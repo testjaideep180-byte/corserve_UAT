@@ -4,6 +4,8 @@ import Pages.LandingPage;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -19,7 +21,7 @@ import java.util.Map;
 
 public class BaseTest {
   public WebDriver driver;
-    public WebDriver initilizeDriver(){
+    public WebDriver initializeDriver(){
 
 
 
@@ -73,10 +75,20 @@ public class BaseTest {
         throw new RuntimeException("No unused data available");
     }
 
+    public File getScreenshot(String testCaseName, WebDriver driver) throws IOException {
+        TakesScreenshot ts = (TakesScreenshot) driver;
+        File source = ts.getScreenshotAs(OutputType.FILE);
+        File file = new File(System.getProperty("user.dir") + "//reports//" + testCaseName + ".png");
+        FileUtils.copyFile(source, file);
+        return file;
+
+    }
+
     @BeforeMethod
     public LandingPage launchApplication(){
-        driver = initilizeDriver();
+        driver = initializeDriver();
         LandingPage landingPage = new LandingPage(driver);
+
         landingPage.goTo();
         return landingPage;
     }

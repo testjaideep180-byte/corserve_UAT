@@ -8,45 +8,33 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 public class AbstractComponents {
 
-    WebDriver driver;
+  protected WebDriver driver;
+  WebDriverWait wait;
 
     public AbstractComponents(WebDriver driver) {
         this.driver = driver;
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
     }
 
     public WebElement waitForElementToAppear(By locator) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
-    public WebElement waitForElementToVisible(WebElement FindBy) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        wait.until(ExpectedConditions.visibilityOf(FindBy));
-        return FindBy;
-    }
-    public void waitForElementToBeClickable(WebElement FindBy) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        wait.until(ExpectedConditions.elementToBeClickable(FindBy));
+    public WebElement waitForElementToVisible(WebElement element) {
+        return wait.until(ExpectedConditions.visibilityOf(element));
     }
 
-    public void scrollToElement(WebElement FindBy) {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView({block: 'center'});", FindBy);
-    }
-
-    public void scrollToCoordinates(int x, int y) {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.scrollTo(arguments[0], arguments[1]);", x, y);
+    public WebElement waitForElementToBeClickable(WebElement element) {
+        return wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
     public void click(WebElement element) {
-        waitForElementToVisible(element).click();
+        waitForElementToBeClickable(element).click();
     }
-
-
 
     public void type(WebElement element, String text) {
         WebElement el = waitForElementToVisible(element);
@@ -54,13 +42,28 @@ public class AbstractComponents {
         el.sendKeys(text);
     }
 
-    public void getcoodrinates(){
-        WebElement element = driver.findElement(By.xpath("(//div[@class='row mx-0 invoice-list-row'])[4]"));
-        int xCoordinate = element.getLocation().getX();
-        int yCoordinate = element.getLocation().getY();
-
-        System.out.println("X Coordinate: " + xCoordinate);
-        System.out.println("Y Coordinate: " + yCoordinate);
+    public void scrollToElement(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
     }
 
+    public void jsClick(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].click();", element);
+    }
+
+    public double addAmounts(By locator, int limit) {
+        List<WebElement> elements = driver.findElements(locator);
+
+        int count = Math.min(elements.size(), limit);
+        double sum = 0;
+
+        for (int i = 0; i < count; i++) {
+            sum += Double.parseDouble(
+                    elements.get(i).getText().replaceAll("[^0-9.]", "")
+            );
+        }
+
+        return sum;
+    }
 }

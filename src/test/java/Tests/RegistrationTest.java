@@ -1,10 +1,13 @@
 package Tests;
 
 import Models.User;
+import Pages.InvoicePage;
+import Pages.LoginPage;
 import Pages.RegistrationPage;
 import TestComponents.BaseTest;
 import Utils.TestDataUtil;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -12,6 +15,12 @@ import java.util.Map;
 
 public class RegistrationTest extends BaseTest {
 
+    RegistrationPage page;
+
+    @BeforeMethod
+    public void setupPage() {
+         page = new RegistrationPage(driver);
+    }
 
     @Test
     public void registrationSuccess() throws IOException {
