@@ -22,7 +22,7 @@ public class InvoiceTest extends BaseTest {
     }
 
     @Test(dataProvider = "testData")
-    public void verifyInvoiceSearchFunctionality(String invoiceNumber, String customerID, String password ) {
+    public void verifyInvoiceSearchFunctionality(String invoiceNumber, String customerID, String password ) throws InterruptedException {
         invoicePage.searchInvoice(invoiceNumber, customerID, password);
         if (customerID.equals("CUS-006053")) {
             Assert.assertEquals(invoicePage.getInvoiceID(), "CINV-068223");
@@ -33,7 +33,7 @@ public class InvoiceTest extends BaseTest {
 
     @Test(dataProvider = "testData") /*First Search a Invoice then click on the Payment button if it is
     unpaid and it is paid then check the payment status id paid*/
-    public void verifyInvoicePaymentFunctionality(String invoiceNumber, String customerID, String password ) {
+    public void verifyInvoicePaymentFunctionality(String invoiceNumber, String customerID, String password ) throws InterruptedException {
         invoicePage.searchInvoice(invoiceNumber, customerID, password);
         if(invoicePage.getInvoiceStatus().equals("Unpaid")){
             invoicePage.clickOnPayButton();
@@ -56,8 +56,8 @@ public class InvoiceTest extends BaseTest {
 
     @Test
     public void verifyCartClearFunctionality()  {
-        loginPage.login("CUS-006053", "Dots@123");
         CartPage cartPage = new CartPage(driver);
+        loginPage.login("CUS-006053", "Dots@123");
         cartPage.goToBasket();
         cartPage.scrollToClearBasket();
         cartPage.clearCartBasket();
@@ -67,6 +67,7 @@ public class InvoiceTest extends BaseTest {
         public void verifyInvoiceCardCartFunctionality() throws InterruptedException {
         invoicePage.invoiceCardDetails("CUS-006053", "Dots@123");
         invoicePage.clickOnAddToBasketButton();
+        Thread.sleep(1000);
         Assert.assertEquals(invoicePage.getDueAmountsOfCartAddedInvoices(), invoicePage.getTotalDueAmountsOfCartAddedInvoices(), "Amount Matches");
         Assert.assertEquals(invoicePage.getTotalInvoiceCount(), "3 invoices");
         invoicePage.clickCheckoutButton();

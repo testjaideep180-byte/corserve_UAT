@@ -7,7 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.List;
 
 public class InvoicePage extends AbstractComponents {
-
+    WebDriver driver;
 
 
     @FindBy(xpath = "//label[contains(text(),'Invoice Number')]/following-sibling::div")
@@ -51,11 +51,12 @@ public class InvoicePage extends AbstractComponents {
 
         public InvoicePage(WebDriver driver) {
         super(driver);
+        this.driver = driver;
         PageFactory.initElements(driver, this);
 
     }
 
-    public void searchInvoice(String invoiceNumber, String customerID, String password) {
+    public void searchInvoice(String invoiceNumber, String customerID, String password) throws InterruptedException {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login(customerID, password);
         LandingPage landingPage = new LandingPage(driver);
@@ -97,7 +98,8 @@ public class InvoicePage extends AbstractComponents {
     }
 
     public void clickPayNowBtn() {
-        invoiceCard.findElement(payNowBtn).click();
+            scrollToElement(driver.findElement(payNowBtn));
+            jsClick(invoiceCard.findElement(payNowBtn));
     }
 
     public String getReference() {
@@ -117,6 +119,7 @@ public class InvoicePage extends AbstractComponents {
         for (int i = 0; i < count; i++) {
             List<WebElement> elements = driver.findElements(addToBasketBtn);
             WebElement element = elements.get(i); // always first available
+            waitForElementToBeClickable(element);
             element.click();
         }
     }

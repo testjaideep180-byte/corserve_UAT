@@ -48,13 +48,13 @@ public class ProfilePage extends AbstractComponents {
         click(profileMenu);
     }
 
-    public void updateProfile(String firstName, String lastName, String email){
+    public void updateProfile(String firstName, String lastName, String email) throws InterruptedException {
         type(firstNameField,firstName);
         type(lastNameField,lastName);
         type(emailField, email);
         scrollToElement(updateButton);
         waitForElementToVisible(updateButton);
-        click(updateButton);
+        jsClick(updateButton);
     }
 
     public String getSuccessMessage(){
@@ -67,7 +67,7 @@ public class ProfilePage extends AbstractComponents {
         emailField.clear();
         scrollToElement(updateButton);
         waitForElementToVisible(updateButton);
-        click(updateButton);
+        jsClick(updateButton);
     }
 
     public int getErrorMessage(){

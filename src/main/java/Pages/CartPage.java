@@ -22,9 +22,6 @@ public class CartPage extends AbstractComponents {
     @FindBy(css = ".mt-3")
     WebElement viewInvoiceCTA;
 
-    @FindBy(css = ".btn-primary")
-    WebElement proceedToCheckout;
-
     @FindBy(css = ".btn-blue")
     WebElement addMoreInvoiceButton;
 
@@ -35,6 +32,7 @@ public class CartPage extends AbstractComponents {
     WebElement invoiceTotalAmount;
 
     By  invoiceAmount = By.cssSelector(".basket-item-amount");
+    By  proceedToCheckout = By.cssSelector(".btn-primary");
 
     public CartPage(WebDriver driver){
         super(driver);
@@ -61,7 +59,7 @@ public class CartPage extends AbstractComponents {
 
         if (!cartItems.isEmpty()) {
             waitForElementToVisible(clearBasket);
-            click(clearBasket);
+            jsClick(clearBasket);
             Alert alert = driver.switchTo().alert();
             alert.accept();
         }
@@ -74,7 +72,8 @@ public class CartPage extends AbstractComponents {
     public void addInvoiceToCart() throws InterruptedException {
 
         if(cartItems.isEmpty()) {
-            click(viewInvoiceCTA);
+            scrollToElement(viewInvoiceCTA);
+            jsClick(viewInvoiceCTA);
             InvoicePage invoicePage = new InvoicePage(driver);
             invoicePage.clickOnAddToBasketButton();
             driver.navigate().back();
@@ -86,10 +85,10 @@ public class CartPage extends AbstractComponents {
     }
 
 
-    public void goToCheckout(){
-        scrollToElement(proceedToCheckout);
-        waitForElementToVisible(proceedToCheckout);
-        click(proceedToCheckout);
+    public void goToCheckout() throws InterruptedException {
+        scrollToElement(driver.findElement(proceedToCheckout));
+        waitForElementToBeClickable(driver.findElement(proceedToCheckout));
+        jsClick(driver.findElement(proceedToCheckout));
     }
 
     public String getTotalAmount(){
@@ -104,7 +103,8 @@ public class CartPage extends AbstractComponents {
     }
 
     public int invoiceCount(){
-        waitForElementToVisible(cartItems.getLast());
+        driver.navigate().refresh();
+        waitVisibilityOfAllElements(cartItems);
         return cartItems.size();
     }
 
@@ -115,7 +115,7 @@ public class CartPage extends AbstractComponents {
 
     public void clickAddMoreInvoicesCTA(){
         waitForElementToVisible(addMoreInvoiceButton);
-        click(addMoreInvoiceButton);
+        jsClick(addMoreInvoiceButton);
     }
 
 

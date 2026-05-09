@@ -31,6 +31,9 @@ public class AbstractComponents {
     public WebElement waitForElementToBeClickable(WebElement element) {
         return wait.until(ExpectedConditions.elementToBeClickable(element));
     }
+    public List<WebElement> waitVisibilityOfAllElements(List<WebElement> element) {
+        return wait.until(ExpectedConditions.visibilityOfAllElements(element));
+    }
 
     public void click(WebElement element) {
         waitForElementToBeClickable(element).click();

@@ -19,7 +19,7 @@ public class ProfileTest extends BaseTest {
     }
 
     @Test
-    public void verifyUpdateProfileFunctionality(){
+    public void verifyUpdateProfileFunctionality() throws InterruptedException {
         loginPage.login("CUS-006053", "Dots@123");
         profilePage.clickProfileMenu();
         profilePage.updateProfile("John", "Doe","test331@yopmail.com");

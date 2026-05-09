@@ -59,14 +59,14 @@ public class RegistrationTest extends BaseTest {
         Assert.assertEquals(page.failureMessage(), "Customer ID and Postal Code do not match.");
     }
 
-    @Test(groups = "Regression",priority = 3)
+    @Test(groups = "Regression")
     public void emptyFormSubmission(){
         RegistrationPage page = new RegistrationPage(driver);
         page.submitEmptyForm();
         Assert.assertEquals(page.errorMessageCount(),7);
     }
 
-    @Test(groups = "Regression",priority = 4)
+    @Test(groups = "Regression")
     public void verifySigUpBtnFunctionality(){
         RegistrationPage page = new RegistrationPage(driver);
         Assert.assertEquals(page.signUpBtnFunctionality(), "Register | Corserv");

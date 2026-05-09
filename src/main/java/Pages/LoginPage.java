@@ -76,7 +76,7 @@ public class LoginPage extends AbstractComponents {
         return invoiceList.isDisplayed();
     }
 
-    public void findInvoice(String customerID, String password){
+    public void findInvoice(String customerID, String password) throws InterruptedException {
         LandingPage landingPage = new LandingPage(driver);
         landingPage.findInvoice("CINV-068835");
         type(customerIDField, customerID);

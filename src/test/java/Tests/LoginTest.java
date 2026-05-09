@@ -41,7 +41,7 @@ public class LoginTest extends BaseTest {
         Assert.assertTrue(loginPage.redirectionToInvoiceList(), "INVOICE LIST is Displayed");
     }
     @Test
-    public void verifyFindInvoice(){
+    public void verifyFindInvoice() throws InterruptedException {
         loginPage.findInvoice("CUS-006053", "Dots@123");
         Assert.assertTrue(loginPage.invoiceDetails(), "INVOICE Details are Displayed");
     }

@@ -21,7 +21,7 @@ public class LandingPage extends AbstractComponents {
     @FindBy(xpath = "//div[@class='banner-btn']/a[1]")
     WebElement payInvoiceCTA;
 
-    @FindBy(xpath = "//button[contains(text(),'Find Invoice')]")
+    @FindBy(css = ".col-auto")
     WebElement findInvoiceCTA;
 
     @FindBy(css = "#EnterInvoice")
@@ -52,11 +52,13 @@ public class LandingPage extends AbstractComponents {
     }
 
     public void clickOnBasket() {
-        click(basket);
+        jsClick(basket);
     }
 
 
-    public void findInvoice(String invoiceNumber) {
+    public void findInvoice(String invoiceNumber) throws InterruptedException {
+        scrollToElement(findInvoiceCTA);
+        Thread.sleep(1000);
         type(invoiceNumField, invoiceNumber);
         click(findInvoiceCTA);
     }

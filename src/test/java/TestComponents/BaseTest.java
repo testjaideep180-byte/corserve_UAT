@@ -4,6 +4,7 @@ import Pages.LandingPage;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -15,6 +16,7 @@ import org.testng.annotations.BeforeMethod;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,10 +39,11 @@ public class BaseTest {
     // ✅ Additional stability
             options.addArguments("--disable-notifications");
             options.addArguments("--incognito");
-           options.addArguments("--headless=new");
+          options.addArguments("--headless=new");
            options.addArguments("window-size=1920,1080");
             driver  = new ChromeDriver(options);
-    //      driver.manage().window().maximize();   // Maximize browser window
+      //      driver.manage().window().maximize();
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));// Maximize browser window
             return driver;
     }
 

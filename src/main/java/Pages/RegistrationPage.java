@@ -54,7 +54,7 @@ public class RegistrationPage extends AbstractComponents {
          type(postalCode,User.getPostalCode());
          type(password,User.getPassword());
          type(confirmPassword, User.getConfirmPassword());
-         click(submitBtn);
+         jsClick(submitBtn);
     }
 
     public String successMessage(){
@@ -66,7 +66,7 @@ public class RegistrationPage extends AbstractComponents {
     public void submitEmptyForm(){
         LandingPage landingPage = new LandingPage(driver);
         landingPage.clickCreateAccountCTA();
-        click(submitBtn);
+        jsClick(submitBtn);
     }
 
     public int errorMessageCount(){
