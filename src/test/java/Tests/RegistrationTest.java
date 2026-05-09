@@ -22,7 +22,7 @@ public class RegistrationTest extends BaseTest {
          page = new RegistrationPage(driver);
     }
 
-    @Test
+    @Test(groups = "Regression",priority = 1)
     public void registrationSuccess() throws IOException {
         RegistrationPage page = new RegistrationPage(driver);
         Map<String, String> data = getNextUnusedData();
@@ -43,7 +43,7 @@ public class RegistrationTest extends BaseTest {
         Assert.assertEquals(page.successMessage(), "Registration successful! Please login with your credentials.");
     }
 
-    @Test
+    @Test(groups = "Regression",priority = 2)
     public void registrationFailure() {
         RegistrationPage page = new RegistrationPage(driver);
         User user = new User(
@@ -59,14 +59,14 @@ public class RegistrationTest extends BaseTest {
         Assert.assertEquals(page.failureMessage(), "Customer ID and Postal Code do not match.");
     }
 
-    @Test
+    @Test(groups = "Regression",priority = 3)
     public void emptyFormSubmission(){
         RegistrationPage page = new RegistrationPage(driver);
         page.submitEmptyForm();
         Assert.assertEquals(page.errorMessageCount(),7);
     }
 
-    @Test
+    @Test(groups = "Regression",priority = 4)
     public void verifySigUpBtnFunctionality(){
         RegistrationPage page = new RegistrationPage(driver);
         Assert.assertEquals(page.signUpBtnFunctionality(), "Register | Corserv");

@@ -72,6 +72,7 @@ public class ProfilePage extends AbstractComponents {
 
     public int getErrorMessage(){
         waitForElementToVisible(errorMessage.get(2));
+        scrollToElement(errorMessage.get(2));
         return errorMessage.size();
     }
 

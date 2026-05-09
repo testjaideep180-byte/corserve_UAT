@@ -104,6 +104,7 @@ public class CartPage extends AbstractComponents {
     }
 
     public int invoiceCount(){
+        waitForElementToVisible(cartItems.getLast());
         return cartItems.size();
     }
 

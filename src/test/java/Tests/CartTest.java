@@ -21,7 +21,7 @@ public class CartTest extends BaseTest {
         invoicePage = new InvoicePage(driver);
     }
 
-    @Test
+    @Test(groups = "Regression",priority = 1)
     public void verifyProceedToCheckoutFunctionality() throws InterruptedException {
        loginPage.login("CUS-006053", "Dots@123");
        cartPage.goToBasket();
@@ -31,7 +31,7 @@ public class CartTest extends BaseTest {
        Assert.assertEquals(invoicePage.getAmount(),totalPrice);
     }
 
-    @Test
+    @Test(groups = "Regression",priority = 2)
     public void verifyRemoveInvoiceFromCartFunctionality() throws InterruptedException {
         loginPage.login("CUS-006053", "Dots@123");
         cartPage.goToBasket();
@@ -42,7 +42,7 @@ public class CartTest extends BaseTest {
 
     }
 
-    @Test
+    @Test(groups = "Regression",priority = 3)
     public void verifyTotalInvoiceAmount() throws InterruptedException {
         loginPage.login("CUS-006053", "Dots@123");
         cartPage.goToBasket();
@@ -52,7 +52,7 @@ public class CartTest extends BaseTest {
 
     }
 
-    @Test
+    @Test(groups = "Regression",priority = 4)
     public void verifyAddMoreInvoiceCTAFunctionality(){
         loginPage.login("CUS-006053", "Dots@123");
         cartPage.goToBasket();

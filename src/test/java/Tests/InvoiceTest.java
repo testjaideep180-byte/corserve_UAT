@@ -56,7 +56,7 @@ public class InvoiceTest extends BaseTest {
 
     @Test
     public void verifyCartClearFunctionality()  {
-        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login("CUS-006053", "Dots@123");
         CartPage cartPage = new CartPage(driver);
         cartPage.goToBasket();
         cartPage.scrollToClearBasket();
@@ -73,7 +73,7 @@ public class InvoiceTest extends BaseTest {
     }
 
     @Test
-    public void verifyViewInvoiceDetailsFunctionality(){
+    public void verifyViewInvoiceDetailsFunctionality() throws InterruptedException {
         invoicePage.invoiceCardDetails("CUS-006053", "Dots@123");
         invoicePage.clickOnViewInvoiceDetails(invoiceID);
         Assert.assertEquals(invoicePage.getInvoiceID(), invoiceID);

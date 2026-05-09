@@ -159,9 +159,10 @@ public class InvoicePage extends AbstractComponents {
         throw new RuntimeException("Invoice not found: " + invoiceNum);
     }
 
-     public void clickOnViewInvoiceDetails(String invoiceNum){
-         WebElement prod = getInvoiceByNumber(invoiceNum); // Find the target product
-         prod.findElement(viewInvoice).click();
+     public void clickOnViewInvoiceDetails(String invoiceNum) throws InterruptedException {
+          WebElement prod = getInvoiceByNumber(invoiceNum);
+          Thread.sleep(2000);
+          prod.findElement(viewInvoice).click();
      }
 
      public boolean isBannerDisplayed(){

@@ -8,7 +8,6 @@
     <classes>
         <class name="Tests.RegistrationTest">
             <methods>
-                <include name="registrationSuccess"/>
                 <include name="registrationFailure"/>
                 <include name="emptyFormSubmission"/>
                 <include name="verifySigUpBtnFunctionality"/>

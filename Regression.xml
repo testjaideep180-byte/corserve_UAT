@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Login Suite">
-
+<suite name="All Test Suite">
     <listeners>
         <listener class-name= "TestComponents.Listeners"/>
     </listeners>
-    <test name="Invoice Tests">
+    <test verbose="2" preserve-order="true" name="D:/Selenium Script/Corserve_UAT">
         <classes>
+            <class name="Tests.CartTest">
+                <methods>
+                    <include name="verifyProceedToCheckoutFunctionality"/>
+                    <include name="verifyRemoveInvoiceFromCartFunctionality"/>
+                    <include name="verifyTotalInvoiceAmount"/>
+                    <include name="verifyAddMoreInvoiceCTAFunctionality"/></methods>
+            </class>
             <class name="Tests.InvoiceTest">
                 <methods>
                     <include name="verifyInvoiceSearchFunctionality"/>
@@ -14,14 +20,8 @@
                     <include name="verifyInvoiceCardPaymentFunctionality"/>
                     <include name="verifyCartClearFunctionality"/>
                     <include name="verifyInvoiceCardCartFunctionality"/>
-                    <include name="verifyViewInvoiceDetailsFunctionality"/>
-                </methods>
+                    <include name="verifyViewInvoiceDetailsFunctionality"/></methods>
             </class>
-        </classes>
-    </test>
-
-    <test name="Login Tests">
-        <classes>
             <class name="Tests.LoginTest">
                 <methods>
                     <include name="verifyLoginFunctionality"/>
@@ -32,11 +32,12 @@
                     <include name="verifyFindInvoice"/>
                 </methods>
             </class>
-        </classes>
-    </test>
-
-    <test name="Registration Tests">
-        <classes>
+            <class name="Tests.ProfileTest">
+                <methods>
+                    <include name="verifyUpdateProfileFunctionality"/>
+                    <include name="verifyUpdateProfileFunctionalityWithoutDetails"/>
+                </methods>
+            </class>
             <class name="Tests.RegistrationTest">
                 <methods>
                     <include name="registrationFailure"/>
@@ -46,5 +47,4 @@
             </class>
         </classes>
     </test>
-
 </suite>

@@ -37,8 +37,10 @@ public class BaseTest {
     // ✅ Additional stability
             options.addArguments("--disable-notifications");
             options.addArguments("--incognito");
+           options.addArguments("--headless=new");
+           options.addArguments("window-size=1920,1080");
             driver  = new ChromeDriver(options);
-            driver.manage().window().maximize();   // Maximize browser window
+    //      driver.manage().window().maximize();   // Maximize browser window
             return driver;
     }
 
