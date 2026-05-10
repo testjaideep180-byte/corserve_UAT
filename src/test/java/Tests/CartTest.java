@@ -37,9 +37,14 @@ public class CartTest extends BaseTest {
         cartPage.goToBasket();
         cartPage.addInvoiceToCart();
         int invoiceCount = cartPage.invoiceCount();
+        System.out.println("Initial invoice count: " + invoiceCount);
         cartPage.removeInvoice();
-        Thread.sleep(1000);
-        Assert.assertEquals(cartPage.invoiceCount(), invoiceCount-1);
+        // Wait for the removal to complete and count to update
+        Thread.sleep(2000);
+        int finalCount = cartPage.invoiceCount();
+        System.out.println("Final invoice count: " + finalCount);
+        
+        Assert.assertEquals(finalCount, invoiceCount-1, "Invoice count should decrease by 1 after removal");
 
     }
 

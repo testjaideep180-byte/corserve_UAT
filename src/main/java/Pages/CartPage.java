@@ -104,6 +104,12 @@ public class CartPage extends AbstractComponents {
 
     public int invoiceCount(){
         driver.navigate().refresh();
+        // Wait a bit after refresh to ensure elements are loaded
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
         waitVisibilityOfAllElements(cartItems);
         return cartItems.size();
     }
