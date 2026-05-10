@@ -23,7 +23,7 @@ public class BaseTest {
 
     public WebDriver initializeDriver() {
 
-        String browserName = System.getProperty("browser", "chrome");
+        String browserName = System.getProperty("browser");
 
         if (browserName.contains("chrome")) {
             ChromeOptions options = new ChromeOptions();
