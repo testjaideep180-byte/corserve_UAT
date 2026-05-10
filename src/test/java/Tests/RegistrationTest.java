@@ -5,6 +5,7 @@ import Pages.InvoicePage;
 import Pages.LoginPage;
 import Pages.RegistrationPage;
 import TestComponents.BaseTest;
+import TestComponents.DataUtils;
 import Utils.TestDataUtil;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -16,16 +17,19 @@ import java.util.Map;
 public class RegistrationTest extends BaseTest {
 
     RegistrationPage page;
+    DataUtils utils;
 
     @BeforeMethod
     public void setupPage() {
          page = new RegistrationPage(driver);
+         utils = new DataUtils();
+
     }
 
     @Test(groups = "Regression",priority = 1)
     public void registrationSuccess() throws IOException {
         RegistrationPage page = new RegistrationPage(driver);
-        Map<String, String> data = getNextUnusedData();
+        Map<String, String> data = utils.getNextUnusedData();
         String customerID = data.get("customerId");
         String postalCode = data.get("postalCode");
         String emailID = TestDataUtil.generateEmail();
