@@ -99,7 +99,7 @@ public class CartPage extends AbstractComponents {
 
     public void removeInvoice(){
         waitForElementToVisible(removeButton);
-        click(removeButton);
+        jsClick(removeButton);
     }
 
     public int invoiceCount(){

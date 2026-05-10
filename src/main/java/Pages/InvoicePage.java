@@ -120,7 +120,7 @@ public class InvoicePage extends AbstractComponents {
             List<WebElement> elements = driver.findElements(addToBasketBtn);
             WebElement element = elements.get(i); // always first available
             waitForElementToBeClickable(element);
-            element.click();
+            jsClick(element);
         }
     }
 
